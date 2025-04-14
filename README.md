@@ -22,15 +22,68 @@ This project uses [`next/font`](https://nextjs.org/docs/app/building-your-applic
 
 ## Learn More
 
-To learn more about Next.js, take a look at the following resources:
+#Project: InterviewPrepAI – AI-powered Interview Preparation Platform
+Tech Stack: Next.js, Node.js, Express.js, MongoDB, Mongoose, WebSocket, Zod, Prisma, TensorFlow.js
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Description:
+InterviewPrepAI is a full-stack web application built using the MERN stack (Next.js, Node.js, MongoDB) that helps users prepare for job interviews through AI-powered mock interview sessions, coding challenges, and performance tracking. The platform uses Natural Language Processing (NLP) and machine learning (TensorFlow.js) to simulate real-world interview scenarios and provide intelligent feedback to users.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Key Features:
 
-## Deploy on Vercel
+✅ User Authentication & Profile Management
+Secure user registration, login, and personalized profile dashboard with progress tracking.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+✅ AI-Powered Mock Interviews
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Real-time mock interviews using AI for technical and behavioral questions.
+
+Voice/text-based interview simulation with instant feedback and scoring.
+
+Question difficulty adapts based on user performance.
+
+✅ Plagiarism & Grammar Checking with NLP
+
+For blog posts or written answers, built-in NLP model checks for grammar, plagiarism, and relevance to the topic.
+
+Works especially well in blog or answer submission sections.
+
+✅ Coding Challenges & Problem Solving
+
+Includes a library of DSA and system design questions.
+
+Users can solve problems and get AI-assisted hints and code reviews.
+
+✅ Community Q&A and Peer Review
+
+Forum for discussion, solution sharing, and peer feedback.
+
+Upvote/downvote and comment system to boost active participation.
+
+✅ Live Coding Contests & Ranking System
+
+Regular contests with time-bound challenges.
+
+Tiered ranking system with badges and rewards to encourage competition.
+
+✅ Learning Path & Certifications
+
+Course-style roadmap with structured topics (DSA, OOP, System Design).
+
+Certificates issued upon completion of each track.
+
+✅ Real-Time Notifications and WebSocket Integration
+
+WebSocket-based notification system for contest alerts, feedback, and community interactions.
+
+Role: Full Stack Developer
+Responsibilities:
+
+Developed REST APIs with Node.js and Express.
+
+Built dynamic frontend using Next.js with server-side rendering.
+
+Integrated MongoDB with Mongoose and Prisma ORM.
+
+Implemented AI models using TensorFlow.js for mock interview feedback.
+
+Managed user auth, real-time features using WebSocket, and input validation with Zod.
