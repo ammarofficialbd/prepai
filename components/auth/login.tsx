@@ -4,11 +4,26 @@ import React from "react";
 import { Button, Input, Link, Form, Divider } from "@heroui/react";
 import { Icon } from "@iconify/react";
 import { Logo } from "@/config/logo";
+import { signIn } from "next-auth/react";
 
 export default function Login() {
   const [isVisible, setIsVisible] = React.useState(false);
 
   const toggleVisibility = () => setIsVisible(!isVisible);
+
+  const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const data = Object.fromEntries(formData);
+    console.log(data);
+    const res = await signIn('credentials', {
+      email: data.email,
+      password: data.password,
+      redirect: true,
+    });  
+    
+  };
+  // 
 
   return (
     <div className="flex h-full w-full items-center justify-center">
@@ -20,7 +35,7 @@ export default function Login() {
             Log in to your account to continue
           </p>
         </div>
-        <Form className="flex flex-col gap-3" validationBehavior="native">
+        <Form className="flex flex-col gap-3" validationBehavior="native" onSubmit={submitHandler}>
           <Input
             isRequired
             label="Email Address"
