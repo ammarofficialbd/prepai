@@ -1,3 +1,5 @@
+import { li } from "framer-motion/client";
+
 /** @type {import('tailwindcss').Config} */
 const {heroui} = require("@heroui/react");
 module.exports = {
@@ -13,6 +15,7 @@ module.exports = {
   theme: {
     extend: {},
   },
+  lightMode: "class",
   darkMode: "class",
   plugins: [heroui()],
 }

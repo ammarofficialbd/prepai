@@ -19,6 +19,6 @@ export const register = async (name: string, email: string, password: string) =>
     })
 
     return newUser?._id 
-    ? {create : true} : ( () => {throw new Error("User not created")} )()
+    ? {create : true} : { create: false, error: "User not created" } 
 
 }

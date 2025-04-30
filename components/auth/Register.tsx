@@ -1,28 +1,39 @@
 "use client";
 
 import React, { Component } from "react";
-import { Button, Input, Link, Form } from "@heroui/react";
+import { Button, Input, Link, Form, toast, Toast, useToast, addToast } from "@heroui/react";
 import { Icon } from "@iconify/react";
 import { Logo } from "@/config/logo";
 import { registerUser } from "@/actions/auth.action";
+import { useRouter } from "next/navigation";
+import useGenericSubmitHandler from "@/hooks/useGenericHandler";
+import { set } from "mongoose";
 
 export default function Register() {
   const [isVisible, setIsVisible] = React.useState(false);
   const toggleVisibility = () => setIsVisible(!isVisible);
- const submitHandler = async (e:React.FormEvent<HTMLFormElement>) =>{
-e.preventDefault();
-const formData = new FormData(e.currentTarget);
+  const router = useRouter()
+  type ToastColor = "default" | "primary" | "secondary" | "foreground" | "success" | "warning" | "danger";
+  const [color, setColor] = React.useState<ToastColor>("default");
+  
+ const [message, setMessage] = React.useState<string>("wait")
 
-console.log(formData);
+ console.log("color" +"=>" + color, message)
 
-const data = Object.fromEntries(formData)
-
-console.log(data)
-const res =  await registerUser(data.name as string, data.email as string, data.password as string)
-
-console.log(res)
-
- }
+  const { handleSubmit, loading} = useGenericSubmitHandler(async (data) => {
+    const res = await registerUser(data.name as string, data.email as string, data.password as string)
+    console.log(res)
+    if (res?.error) {
+      setColor("danger")
+      setMessage(res.error)
+    }
+    if (res?.create) {
+      setColor("success")
+      setMessage("Account created successfully")
+      router.push("/login")
+    }
+    console.log(res)
+  })
   return (
     <div className="flex h-full w-full items-center justify-center">
       <div className="flex w-full max-w-sm flex-col gap-4 rounded-large">
@@ -34,7 +45,7 @@ console.log(res)
           </p>
         </div>
         <div className="flex flex-col gap-3">
-          <Form validationBehavior="native" onSubmit={submitHandler}>
+          <Form validationBehavior="native" onSubmit={handleSubmit} className={loading ? "opacity-50 pointer-events-none" : ""}>
             <div className="flex flex-col w-full">
               <Input
                 isRequired
@@ -93,7 +104,8 @@ console.log(res)
               />
             </div>
 
-            <Button className="w-full mt-2" color="primary" type="submit">
+            <Button className="w-full mt-2" color="primary" type="submit" isLoading={loading} 
+            onPress={() => addToast({ title: message, description: "Please wait...", color: color })}>
               Register
             </Button>
           </Form>
