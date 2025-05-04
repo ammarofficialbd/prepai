@@ -20,6 +20,7 @@ export default function Login() {
       email: data.email,
       password: data.password,
       redirect: true,
+      callbackUrl: "/app/dashboard",
     });  
     
   };

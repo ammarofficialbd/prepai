@@ -9,21 +9,57 @@ import {
   Button,
 } from "@heroui/react";
 import { industryTopics, interviewDifficulties, interviewTypes } from "@/constants/data";
+import { InterviewBody } from "@/backend/types/interview.types";
+import useGenericSubmitHandler from "@/hooks/useGenericHandler";
+import { useSession } from "next-auth/react";
+import { IUser } from "@/backend/models/user.model";
+import { newInterview } from "@/actions/interview.action";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 const interviewIndustries = Object.keys(industryTopics)
 
 export default function NewInterview() {
   const [selectedIndustry, setSelectedIndustry] = React.useState<string>("");
   const [topics, setTopics] = React.useState<string[]>([]);
-
+ const {data} = useSession()
+ const user = data?.user as IUser
+ const router = useRouter()
   const handleIndusryChange = (e : React.ChangeEvent<HTMLSelectElement>) => {
    const industry = e.target.value as keyof typeof industryTopics;
     setSelectedIndustry(industry);
     setTopics(industryTopics[industry] || []);
   };
+
+
+  const {handleSubmit, loading} = useGenericSubmitHandler(async (data) => {
+    const interviewData: InterviewBody = {
+      industry: data.industry as string,
+      topic: data.topic as string,
+      type: data.type as string,
+      role: data.role as string,
+      difficulty: data.difficulty as string,
+      numOfQuestions: Number(data.numOfQuestions),
+      duration: Number(data.duration),
+      user: user?._id!
+    }
+
+    const res = await newInterview(interviewData)
+
+    if(res?.error) {
+      toast.error(res.error)
+    }
+    if(res?.created) {   
+      toast.success("Interview created successfully")
+      router.push("/app/interviews")
+    } 
+
+  })
+
+
   return (
     <div className="p-4">
-      <Form validationBehavior="native">
+      <Form validationBehavior="native" onSubmit={handleSubmit} className={loading ? "opacity-50 pointer-events-none" : ""}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
           <div className="col-span-1">
             <h3 className="text-xl">Select all options below:</h3>
@@ -31,7 +67,7 @@ export default function NewInterview() {
 
           <div className="col-span-1">
             <div className="flex gap-4 max-w-sm justify-end items-center">
-              <Button color="primary" type="submit">
+              <Button color="primary" type="submit" isLoading={loading} isDisabled={loading}>  
                 Create Interview
               </Button>
               <Button type="reset" variant="bordered">
